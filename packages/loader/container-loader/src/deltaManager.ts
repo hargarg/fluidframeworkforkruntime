@@ -557,6 +557,15 @@ export class DeltaManager
         };
     }
 
+    /**
+     * Submits message to be read by Fluid Integration Service
+     * @param contents
+     * @param metadata
+     */
+    public submitRemoteHelpOp(contents: any, metadata?: any): void {
+        this.submit(MessageType.RemoteHelp, contents, false, metadata);
+    }
+
     public async connect(args: IConnectionArgs): Promise<IConnectionDetails> {
         const connection = await this.connectCore(args);
         return DeltaManager.detailsFromConnection(connection);
