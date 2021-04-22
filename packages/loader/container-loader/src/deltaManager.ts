@@ -558,7 +558,7 @@ export class DeltaManager
     }
 
     /**
-     * Submits message to be read by Fluid Integration Service
+     * Submit message that the service can interpret and load service side collaborator in response
      * @param contents
      * @param metadata
      */
