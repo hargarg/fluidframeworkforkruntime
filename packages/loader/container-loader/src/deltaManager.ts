@@ -557,6 +557,15 @@ export class DeltaManager
         };
     }
 
+    /**
+     * Submit message that the service can interpret and load service side collaborator in response
+     * @param contents
+     * @param metadata
+     */
+    public submitRemoteHelpOp(contents: any, metadata?: any): void {
+        this.submit(MessageType.RemoteHelp, contents, false, metadata);
+    }
+
     public async connect(args: IConnectionArgs): Promise<IConnectionDetails> {
         const connection = await this.connectCore(args);
         return DeltaManager.detailsFromConnection(connection);

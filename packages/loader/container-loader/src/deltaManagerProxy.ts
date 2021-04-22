@@ -152,6 +152,9 @@ export class DeltaManagerProxy
         return this.deltaManager.close();
     }
 
+    public submitRemoteHelpOp(contents: any, metadata?: any): void {
+        return this.deltaManager.submitRemoteHelpOp(contents, metadata);
+    }
     public submitSignal(content: any): void {
         return this.deltaManager.submitSignal(content);
     }

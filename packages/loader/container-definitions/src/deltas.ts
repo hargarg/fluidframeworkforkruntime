@@ -156,6 +156,9 @@ export interface IDeltaManager<T, U> extends IEventProvider<IDeltaManagerEvents>
 
     /** Submit a signal to the service to be broadcast to other connected clients, but not persisted */
     submitSignal(content: any): void;
+
+    /** Submit message that the service can interpret and load service side collaborator in response */
+    submitRemoteHelpOp(contents: any, metadata?: any): void;
 }
 
 /** Events emitted by a Delta Queue */

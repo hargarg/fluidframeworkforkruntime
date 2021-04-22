@@ -122,6 +122,8 @@ export class MockDeltaManager extends EventEmitter
         return 0;
     }
 
+    public submitRemoteHelpOp(contents: any, metadata?: any): void { }
+
     public dispose() { }
 
     constructor() {
