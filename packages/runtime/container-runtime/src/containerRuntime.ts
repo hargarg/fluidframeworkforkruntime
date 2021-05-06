@@ -8,6 +8,7 @@ import {
     AgentSchedulerFactory,
     IAgentScheduler,
 } from "@fluidframework/agent-scheduler";
+import {FISSchedulerFactory} from "@fluidframework/fis-scheduler";
 import { ITelemetryLogger } from "@fluidframework/common-definitions";
 import {
     IFluidObject,
@@ -473,6 +474,7 @@ class ContainerRuntimeDataStoreRegistry extends FluidDataStoreRegistry {
         super([
             ...namedEntries,
             AgentSchedulerFactory.registryEntry,
+            FISSchedulerFactory.registryEntry,
         ]);
     }
 }
@@ -589,6 +591,7 @@ export class ContainerRuntime extends TypedEventEmitter<IContainerRuntimeEvents>
         // container from snapshot(ex. draft mode).
         if (!context.existing) {
             await runtime.createRootDataStore(AgentSchedulerFactory.type, agentSchedulerId);
+            await runtime.createRootDataStore(FISSchedulerFactory.type, "_fisscheduler");
         }
 
         runtime.subscribeToLeadership();

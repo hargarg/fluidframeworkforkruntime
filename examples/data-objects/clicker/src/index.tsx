@@ -11,6 +11,7 @@ import { SharedCounter } from "@fluidframework/counter";
 import { IFluidHTMLView } from "@fluidframework/view-interfaces";
 import React from "react";
 import ReactDOM from "react-dom";
+import { IFISScheduler} from "@fluidframework/fis-scheduler";
 import { ClickerAgent } from "./agent";
 
 export const ClickerName = "Clicker";
@@ -28,6 +29,7 @@ export class Clicker extends DataObject implements IFluidHTMLView {
 
     private _counter: SharedCounter | undefined;
     private _taskManager: TaskManager | undefined;
+    private _fisScheduler: IFISScheduler | undefined;
 
     /**
      * Do setup work here
@@ -44,7 +46,12 @@ export class Clicker extends DataObject implements IFluidHTMLView {
         this._counter = await counterHandle?.get();
         const taskManagerHandle = this.root.get<IFluidHandle<TaskManager>>(taskManagerKey);
         this._taskManager = await taskManagerHandle?.get();
-
+        const agentSchedulerResponse = await this.context.containerRuntime.request({ url: "/_fisscheduler" });
+        if (agentSchedulerResponse.status === 404) {
+            throw new Error("Agent scheduler not found");
+        }
+        this._fisScheduler = agentSchedulerResponse.value as IFISScheduler;
+        // console.log(await fisScheduler.initiate("fd"));
         this.setupAgent();
     }
 
@@ -75,6 +82,7 @@ export class Clicker extends DataObject implements IFluidHTMLView {
                     this.setupAgent();
                 });
                 await clickerAgent.run();
+                await this._fisScheduler?.initiate("jdj");
             }).catch(() => {
                 // We're not going to abandon our attempt, so if the promise rejects it probably means we got
                 // disconnected.  So we'll try again once we reconnect.  If it was for some other reason, we'll
